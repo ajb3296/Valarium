@@ -51,6 +51,7 @@ async def send_msg(bot, data):
             hex_color = hex(dominant_color[0]) + hex(dominant_color[1])[2:] + hex(dominant_color[2])[2:]
             color = int(hex_color, 16)
         except Exception:
+            print(traceback.format_exc())
             color = color_code
         
         # 데이터 가져오기
