@@ -1,3 +1,4 @@
+import os
 import discord
 import asyncio
 import traceback
@@ -44,10 +45,15 @@ async def send_msg(bot, data):
         unixtime = data[2]
         icon = data[3]
 
+        # 아이콘 저장할 임시폴더 생성
+        temp_folder = "temp"
+        if not os.path.exists(temp_folder):
+            os.mkdir(temp_folder)
+
         # 색상 추출
         try:
-            urllib.request.urlretrieve(icon, f"temp/{icon.split('/')[-1]}")
-            dominant_color = ColorThief(f"temp/{icon.split('/')[-1]}").get_color(quality=1)
+            urllib.request.urlretrieve(icon, f"{temp_folder}/{icon.split('/')[-1]}")
+            dominant_color = ColorThief(f"{temp_folder}/{icon.split('/')[-1]}").get_color(quality=1)
             hex_color = hex(dominant_color[0]) + hex(dominant_color[1])[2:] + hex(dominant_color[2])[2:]
             color = int(hex_color, 16)
         except Exception:
